@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Denver Mayor Handlebars template</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
+</head>
+
+<body>
+    <div id="displayArea"></div>
+    <!-- <script id="myTemplate" type="text/x-handlebars-template">
+        {{#each candidates}}
+        <h1>Employee Name : {{this.name}}, Age : {{this.age}}</h1>
+        {{/each}} -->
+    <script id="myTemplate" type="text/x-handlebars-template">
+        {{#each candidates}}
+            <h2 style="font-size:2rem;color:red">District {{this.District}}</h2>
+            <aside style="clear:both" class="related right">
+                <div style="border: 1px solid silver;background-color:#f0f0f0;padding:10px">
+                    <h3 style="font-size:1.75rem">{{this.Name}}</h3>
+                    {{this.Party}}
+                    <hr>
+                    <img src="https://extras.denverpost.com/politics/2022-candidate-headshots/{{this.Name}}.jpg" style="float:right;width:150px;margin-left: 5px"><p style="color:#8e1024;font-weight: bold;margin:3px 0 -5px 0;">AGE</p>
+                    {{this.Age}}
+                    <p style="color:#8e1024;font-weight: bold;margin:3px 0 -5px 0;">RESIDENCE</p>
+                    {{this.[Place of residence]}}
+                    <p style="color:#8e1024;font-weight: bold;margin:3px 0 -5px 0;">PROFESSION</p>
+                    {{this.Profession}}
+                    <p style="color:#8e1024;font-weight: bold;margin:3px 0 -5px 0;">EDUCATION</p>
+                    {{this.Education}}
+                    <p style="color:#8e1024;font-weight: bold;margin:3px 0 -5px 0;">EXPERIENCE</p>
+                    {{this.Experience}}
+                    <div style="margin-top:10px">
+                    {{#if [Campaign website]}}
+                    <a style="font-weight: bold;" href="{{this.[Campaign website]}}" target="_blank">WEBSITE</a>{{/if}}{{#if Facebook}}&nbsp;&bull;&nbsp;<a style="font-weight: bold;" href="{{this.Facebook}}" target="_blank">FACEBOOK</a>{{/if}}{{#if Twitter}}&nbsp;&bull;&nbsp;<a style="font-weight: bold;" href="{{this.Twitter}}" target="_blank">TWITTER</a>{{/if}}
+                </div>
+                </div>
+            </aside>
+            <strong>What is the most important issue facing Coloradans today?</strong>
+            {{this.[What is the most important issue facing Coloradans today?]}}
+            &nbsp;
+            <strong>What are your key goals for the state's education system in the next four years?</strong>
+            {{this.[What are your key goals for the state's education system in the next four years?]}}
+            &nbsp;
+            <strong>What are your short- and long-term tactics for improving public safety in the state?</strong>
+            {{this.[What are your short- and long-term tactics for improving public safety in the state?]}}
+            &nbsp;
+            <strong>What are the best solutions to homelessness in Colorado?</strong>
+            {{this.[What are the best solutions to homelessness in Colorado?]}}
+            &nbsp;
+            <strong>How can Colorado conserve the amount of water it draws from the Colorado River to complement recent lower-basin cutbacks announced by the U.S. Bureau of Reclamation?</strong>
+            {{this.[How can Colorado conserve the amount of water it draws from the Colorado River to complement recent lower-basin cutbacks announced by the U.S. Bureau of Reclamation?]}}
+            &nbsp;
+            <strong>What more can Colorado do to prevent and protect itself against wildfires?</strong>
+            {{this.[What more can Colorado do to prevent and protect itself against wildfires?]}}
+            <hr>
+        {{/each}}
+    </script>
+    <script type="text/javascript">
+    var tmpHtml = document.getElementById("myTemplate").innerHTML;
+    var template = Handlebars.compile(tmpHtml);
+
+    // var data = {
+    //     candidates: [
+    //         { name: "John", age: 22 },
+    //         { name: "Dave", age: 34 },
+    //         { name: "Emily", age: 39 }
+    //     ]
+    // };   
+
+    var data = {
+        candidates: [
+  {
+    "#": 3,
+    "Status": "Submitted",
+    "Date Submitted": "9/29/2022 3:34 AM",
+    "Party": "Libertarian Party",
+    "Name": "Kevin Ruskusky",
+    "Age": 42,
+    "Place of residence": "Aurora",
+    "Profession": "Social Studies Teacher",
+    "Education": "BA in History from UNC and Education degree from Regis University",
+    "Family": "My church is my family...and my dog Rusty, of course!",
+    "Experience": "21 years teaching United States History and Government: Elementary school History teacher, High School History and U.S. Government teacher",
+    "Campaign website": "https://www.kevin4colorado.com/",
+    "Facebook": "https://www.facebook.com/Ruskusky4Governor",
+    "Twitter": "",
+    "What is the most important issue facing Coloradans today?": "The cost of living. Inflation has caused the exorbitant pricing of necessities such as food and gas. Coloradans need to feel financially secure in their immediate needs being met.",
+    "What are your key goals for the state's education system in the next four years?": "I am profoundly eager to cultivate an education system that allows every single student to learn to the best of their ability. My primary goal is for Colorado families to have the flexibility of equal access to any type of learning environment (whether that be public, charter, online, home school, or some combination of these) so that each unique child has the optimal chance to thrive in their learning. I will work to end the disparity in school funding that disadvantages the members of so many communities, minorities, and social classes.",
+    "What are your short- and long-term tactics for improving public safety in the state?": "We can find substantial long- and short-term benefits from getting police more involved with their communities and fostering a positive relationship between the police and the people. This will primarily come from generating mutual trust between safety officers and civilians through community education and reliable avenues of communication.",
+    "What are the best solutions to homelessness in Colorado?": "Non-profit organizations are our most valuable resources for our homeless brothers and sisters but they cannot efficiently serve our communities with the current level of government involvement. Non-profits are uniquely qualified to lead in ending homelessness because of the goodness and kindness of those doing the work. However, their altruistic endeavors are hindered by governmental regulations. This cannot continue if we hope to end homelessness.",
+    "How can Colorado conserve the amount of water it draws from the Colorado River to complement recent lower-basin cutbacks announced by the U.S. Bureau of Reclamation?": "For far too long, Colorado Homeowners Associations have employed wasteful measures for the sake of property value and cash flow. These small empires have demanded aesthetic perfection from homeowners which has subsequently harmed our water independence just to keep lawns green and sightly. Cracking down on HOA regulations that require excessive and non-vital water usage is the quickest and simplest way we can conserve water and progress toward energy independence and environmental stability.",
+    "What more can Colorado do to prevent and protect itself against wildfires?": "Diligence in mitigation is key to protection. Simple measures such as regular brush trimming near and around houses can proactively save many lives. We need to provide abundant and secure ways for the disposing of cigarettes and employ water-conserving measures to help diminish the effects of drought. Continuously educating students and families about fire hazards and safety precautions will also play a foundational role in preventing wildfires. Finally, we need to direct more funding to trained wildfire investigators in order to hold fire-starters accountable and find patterns in wildfire causes in order to prevent them from happening again."
+  }
+]
+    };
+    var html = template(data);
+
+    document.getElementById("displayArea").innerHTML += html;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NFL Draft Tracker 2022 | The Denver Post</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/zf/jq-3.3.1/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/zf/jq-3.3.1/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/zf-6.4.3/jq-3.3.1/dt-1.10.20/fc-3.3.0/datatables.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/yadcf/0.9.2/jquery.dataTables.yadcf.js"></script>
+    <!-- <script src="./yadcf.js"></script> -->
+    <style>
+    html,
+    body {
+        font-family: Helvetica, sans-serif;
+    }
+
+    table.dataTable {
+        font-size: 1em;
+        margin-bottom: 25px !important;
+    }
+
+    td {
+        vertical-align: bottom;
+    }
+
+    .updated {
+        margin: 10px 10px -5px 0;
+        font-size: .9em;
+        color: #949494;
+        text-align: center;
+        font-style: italic;
+    }
+
+
+    table td {
+        text-align: left;
+    }
+
+    thead {
+        display: none;
+    }
+
+    table tbody tr:nth-child(even) {
+        background: none;
+    }
+
+    table tr {
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    table tbody td,
+    table tbody th {
+        padding: 4px;
+    }
+
+    .color-block {
+        width: .5em;
+        height: 1.2em;
+        background: #c81632;
+        margin-right: 2px;
+        display: inline-block;
+    }
+
+    .race-title {
+        display: inline;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .race-subtitle {
+        font-size: 1em;
+        font-style: italic;
+        margin-bottom: -3px;
+    }
+
+    table.dataTable td:nth-child(1) {
+        width: 60%;
+        max-width: 60%;
+        word-break: break-all;
+        white-space: pre-line;
+    }
+    table.dataTable td:nth-child(2),
+    table.dataTable td:nth-child(3) {
+        width: 30%;
+        max-width: 30%;
+        word-break: break-all;
+        white-space: pre-line;
+    }
+    </style>
+</head>
+
+<body>
+    <div style="margin-bottom:20px"></div>
+    <div class="color-block"></div>
+    <h3 class="race-title">Mayor</h3>
+    <p class="race-subtitle">If no candidate wins 50% of the vote the top two vote-getters advance to a June 6 runoff.</p>
+    <p class="updated">All results updated <span id="updated-time"></span> &bull; &#10004; indicates winner / * indicates incumbent</p>
+    <table id="mayor" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">Auditor</h3>
+    <table id="auditor" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 id="clerk-nav" class="race-title">Clerk and Recorder</h3>
+    <table id="clerk" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">At-Large City Council</h3>
+    <p class="race-subtitle">Vote for two</p>
+    <table id="at-large" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 1 City Council</h3>
+    <table id="district-1" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 2 City Council</h3>
+    <table id="district-2" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 3 City Council</h3>
+    <table id="district-3" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 4 City Council</h3>
+    <table id="district-4" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 5 City Council</h3>
+    <table id="district-5" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 6 City Council</h3>
+    <table id="district-6" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 7 City Council</h3>
+    <table id="district-7" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 8 City Council</h3>
+    <table id="district-8" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 9 City Council</h3>
+    <table id="district-9" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 10 City Council</h3>
+    <table id="district-10" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 11 City Council</h3>
+    <table id="district-11" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">Referred Question 2M </h3>
+    <p class="race-subtitle">Zoning challenges and variances</p>
+    <table id="question-2M" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">Referred Question 2N</h3>
+    <p class="race-subtitle">Rezoning protest petitions</p>
+    <table id="question-2N" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">Referred Question 2O</h3>
+    <p class="race-subtitle">Park Hill redevelopment</p>
+    <table id="question-2O" class="display" cellspacing="0" width="100%">
+    </table>
+    <script>
+    $(document).ready(function() {
+        var sheetID = '1p6gwZSyJhZvKfwe4NFx7CGVGffWys1GJ1b-1phUfJGw';
+        var tabID = '0';
+        Papa.parse('https://docs.google.com/spreadsheets/d/' + sheetID + '/export?format=csv&id=' + sheetID + '&gid=' + tabID, {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                var data = results.data
+                console.log(data);
+                document.getElementById('updated-time').innerHTML = data[0].updated;
+                var mayorTable = $('#mayor').DataTable({
+                    data: data,
+                    order: [
+                        [3, 'desc']
+                    ],
+                    dom: '<t>',
+                    paging: false,
+                    columns: [{
+                            data: 'updated',
+                            visible: false
+                        },
+                        {
+                            data: 'candidate'
+                        },
+                        {
+                            data: 'party',
+                            visible: false
+                        },
+                        {
+                            data: 'percentage'
+                        },
+                        {
+                            data: 'votes'
+                        }
+                    ]
+                })
+            }
+        })
+
+        // Function to draw all non-mayor tables
+        function drawTable(tabID, tableID) {
+            Papa.parse('https://docs.google.com/spreadsheets/d/1p6gwZSyJhZvKfwe4NFx7CGVGffWys1GJ1b-1phUfJGw/export?format=csv&id=1p6gwZSyJhZvKfwe4NFx7CGVGffWys1GJ1b-1phUfJGw&gid=' + tabID, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    var data = results.data
+                    var table = $(tableID).DataTable({
+                        data: data,
+                        // pageLength: 160,
+                        // responsive: true,
+                        order: [
+                            [3, 'desc']
+                        ],
+                        //ordering: false,
+                        //dom: '<f<t>ilp>',
+                        dom: '<t>',
+                        columns: [{
+                                data: 'candidate'
+                            },
+                            {
+                                data: 'party',
+                                visible: false
+                            },
+                            {
+                                data: 'percentage'
+                            },
+                            {
+                                data: 'votes'
+                            }
+                        ]
+                    })
+                }
+            })
+        }
+        drawTable('1817486515', '#auditor');
+        drawTable('753773273', '#clerk');
+        drawTable('1010366213', '#at-large');
+        drawTable('82862197', '#district-1');
+        drawTable('675429769', '#district-2');
+        drawTable('2012180595', '#district-3');
+        drawTable('829531924', '#district-4');
+        drawTable('974787354', '#district-5');
+        drawTable('1449980407', '#district-6');
+        drawTable('1041100927', '#district-7');
+        drawTable('272609491', '#district-8');
+        drawTable('1311175291', '#district-9');
+        drawTable('1766693778', '#district-10');
+        drawTable('1070018318', '#district-11');
+        drawTable('746820526', '#question-2M');
+        drawTable('1782274668', '#question-2N');
+        drawTable('1303711983', '#question-2O');
+    })
+    </script>
+</body>
+
+</html>

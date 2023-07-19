@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Denver 2023 Runoff Election Results | The Denver Post</title>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/zf/jq-3.3.1/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/zf/jq-3.3.1/dt-1.10.20/fh-3.1.6/r-2.2.3/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.js"></script>
+    <style>
+    html,
+    body {
+        font-family: Helvetica, sans-serif;
+    }
+
+    table.dataTable {
+        font-size: 1em;
+        margin-bottom: 25px !important;
+    }
+
+    td {
+        vertical-align: bottom;
+    }
+
+    .updated {
+        margin: 10px 10px 5px 0;
+        font-size: .9em;
+        color: #949494;
+        text-align: center;
+        font-style: italic;
+    }
+
+
+    table td {
+        text-align: left;
+    }
+
+    thead {
+        display: none;
+    }
+
+    table tbody tr:nth-child(even) {
+        background: none;
+    }
+
+    table tr {
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    table tbody td,
+    table tbody th {
+        padding: 4px;
+    }
+
+    .color-block {
+        width: .5em;
+        height: 1.2em;
+        background: #c81632;
+        margin-right: 2px;
+        display: inline-block;
+    }
+
+    .race-title {
+        display: inline;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .race-subtitle {
+        font-size: 1em;
+        font-style: italic;
+        margin-bottom: -3px;
+    }
+
+    table.dataTable td:nth-child(1) {
+        width: 50%;
+        max-width: 50%;
+        word-break: break-all;
+        white-space: pre-line;
+    }
+
+    table.dataTable td:nth-child(2),
+    table.dataTable td:nth-child(3) {
+        width: 25%;
+        max-width: 25%;
+        word-break: break-all;
+        white-space: pre-line;
+    }
+    </style>
+</head>
+
+<body>
+    <p class="updated">All results updated <span id="updated-time"></span> &bull; &#10004; indicates winner / * indicates incumbent</p>
+    <div class="color-block"></div>
+    <h3 class="race-title">Mayor</h3>
+    <table id="mayor" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 7 City Council</h3>
+    <p><em>Flor Alvidrez will represent District 7 since <a href="https://www.denverpost.com/2023/04/24/denver-city-council-runoff-nick-campion-withdraws-flor-alvidrez/" target="_blank">Nick Campion withdrew</a> during the runoff period.</em></p>
+    <table id="district-7" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 8 City Council</h3>
+    <table id="district-8" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 9 City Council</h3>
+    <table id="district-9" class="display" cellspacing="0" width="100%">
+    </table>
+    <div class="color-block"></div>
+    <h3 class="race-title">District 10 City Council</h3>
+    <table id="district-10" class="display" cellspacing="0" width="100%">
+    </table>
+    <script>
+    $(document).ready(function() {
+        var sheetID = '1xK-Z1dUMBv2KfGuoun6V682-NTDyVqHS15g8rtQn9p8';
+        var tabID = 0;
+        Papa.parse('https://docs.google.com/spreadsheets/d/' + sheetID + '/export?format=csv&id=' + sheetID + '&gid=' + tabID, {
+            // Papa.parse('mayor_7.csv', {
+            download: true,
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                var data = results.data
+                document.getElementById('updated-time').innerHTML = data[0].updated;
+                var table = $('#mayor').DataTable({
+                    data: data,
+                    order: [
+                        [3, 'desc']
+                    ],
+                    dom: '<t>',
+                    paging: false,
+                    columns: [{
+                            data: 'candidate'
+                        },
+                        {
+                            data: 'party',
+                            visible: false
+                        },
+                        {
+                            data: 'percentage',
+                            render: function(data, type, row) {
+                                if (data == '#DIV/0!') {
+                                    return '0.00%'
+                                } else return data
+                            }
+                        },
+                        {
+                            data: 'votes'
+                        }
+                    ]
+                })
+            }
+        })
+
+        // Function to draw all non-mayor tables
+        function drawTable(tabID, tableID) {
+            Papa.parse('https://docs.google.com/spreadsheets/d/1xK-Z1dUMBv2KfGuoun6V682-NTDyVqHS15g8rtQn9p8/export?format=csv&id=1xK-Z1dUMBv2KfGuoun6V682-NTDyVqHS15g8rtQn9p8&gid=' + tabID, {
+                download: true,
+                header: true,
+                skipEmptyLines: true,
+                complete: function(results) {
+                    var data = results.data
+                    var table = $(tableID).DataTable({
+                        data: data,
+                        order: [
+                            [3, 'desc']
+                        ],
+                        dom: '<t>',
+                        paging: false,
+                        columns: [{
+                                data: 'candidate'
+                            },
+                            {
+                                data: 'party',
+                                visible: false
+                            },
+                            {
+                                data: 'percentage',
+                                render: function(data, type, row) {
+                                    if (data == '#DIV/0!') {
+                                        return '0.00%'
+                                    } else return data
+                                }
+                            },
+                            {
+                                data: 'votes'
+                            }
+                        ]
+                    })
+                }
+            })
+        }
+        drawTable(1041100927, '#district-7');
+        drawTable(272609491, '#district-8');
+        drawTable(1311175291, '#district-9');
+        drawTable(1766693778, '#district-10');
+    })
+    </script>
+</body>
+
+</html>

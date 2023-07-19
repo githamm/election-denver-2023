@@ -1,0 +1,31 @@
+Incumbents
+
+Mayor - none
+Auditor - Timothy O'Brien
+Clerk - Paul Lopez
+At-large - 
+At-large - 
+District 1 - Amanda Sandoval
+District 2 - Kevin Flynn
+District 3 - Jamie Torres
+District 4 - 
+District 5 - Amanda Sawyer
+District 6 - Paul Kashmann
+District 7 - 
+District 8 - 
+District 9 - Candi CdeBaca
+District 10 - Chris Hinds
+District 11 - Stacie Gilmore
+
+Widget title: Denver 2023 election results
+Iframe url: https://extras.denverpost.com/elections/2023/denver/general_results_widget.html
+Width: 100%
+Height: 275px
+Scrolling: No
+ADA title: Denver election results
+Set for homepage
+
+
+https://www.denverpost.com/2023/04/04/denver-election-results-mayor-city-council-park-hill/
+
+Check mark: &#10004;
